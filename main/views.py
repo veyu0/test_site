@@ -1,13 +1,18 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 
+from main.models import Women
+
+menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Вход']
+
 
 def index(request):
-    return HttpResponse('Main page')
+    posts = Women.objects.all()
+    return render(request, 'main/index.html', {'posts': posts, 'menu': menu, 'title': 'Главная страница'})
 
 
-def categories(request, cat_id):
-    return HttpResponse(f'<h1>Categories page</h1><p>{cat_id}</p>')
+def about(request):
+    return render(request, 'main/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
 def pageNotFound(request, exception):
